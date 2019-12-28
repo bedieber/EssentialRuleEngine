@@ -120,5 +120,10 @@ namespace SimpleRuleEngine.Test
 
             return ofType.ToImmutableList();
         }
+
+        public void Add(object fact)
+        {
+            _repository.Add(fact);
+        }
     }
 }
