@@ -23,6 +23,18 @@ namespace SimpleRuleEngine
             Repository = repository;
             return CanRun();
         }
+
+        public bool Run(IFactRepository repository)
+        {
+            Repository = repository;
+            return Run();
+        }
+
+        protected void RemoveFact(object fact)
+        {
+            Repository.RemoveFact(fact);
+        }
+
         /// <summary>
         /// This method determines if all conditions of a rule are satisfied for the rule to be executed.<br />
         /// If the method returns true, <see cref="Run"/> will be called.

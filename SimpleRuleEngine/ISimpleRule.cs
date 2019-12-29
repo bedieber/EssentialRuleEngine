@@ -4,6 +4,6 @@ namespace SimpleRuleEngine
     {
         int Priority { get; }
         bool CanRun(IFactRepository repository);
-        bool Run();
+        bool Run(IFactRepository repository);
     }
 }

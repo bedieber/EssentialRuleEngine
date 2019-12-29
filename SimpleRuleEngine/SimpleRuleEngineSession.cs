@@ -52,7 +52,7 @@ namespace SimpleRuleEngine
                         {
                             // TODO handle false as return value
                             // TODO handle exceptions
-                            enumerator.Current.Value.Run();
+                            enumerator.Current.Value.Run(FactsRepository);
                         }
                     }
                 }

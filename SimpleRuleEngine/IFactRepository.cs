@@ -7,5 +7,6 @@ namespace SimpleRuleEngine
     {
         IEnumerable<T> FindAll<T>(params Predicate<T>[] func);
         void Add(object fact);
+        void RemoveFact(object fact);
     }
 }

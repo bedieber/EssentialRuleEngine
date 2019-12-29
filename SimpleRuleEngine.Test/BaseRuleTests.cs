@@ -125,5 +125,10 @@ namespace SimpleRuleEngine.Test
         {
             _repository.Add(fact);
         }
+
+        public void RemoveFact(object fact)
+        {
+            _repository.Remove(fact);
+        }
     }
 }
