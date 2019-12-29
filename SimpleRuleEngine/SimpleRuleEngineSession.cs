@@ -10,7 +10,7 @@ namespace SimpleRuleEngine
         //TODO how to delete facts after rule is run? Postcondition? immediately?
         private SortedList<int, ISimpleRule> Rules { get; set; }
 
-        internal IFactRepository FactsRepository { get; private set; }
+        internal IFactRepository FactsRepository { get; set; }
 
         private Mutex _mutex = new Mutex();
 
@@ -44,16 +44,18 @@ namespace SimpleRuleEngine
         {
             lock (_mutex)
             {
-                var enumerator = Rules.GetEnumerator();
-                do
+                using (var enumerator = Rules.GetEnumerator())
                 {
-                    if (enumerator.Current.Value.CanRun())
+                    while (enumerator.MoveNext())
                     {
-                        // TODO handle false as return value
-                        // TODO handle exceptions
-                        enumerator.Current.Value.Run();
+                        if (enumerator.Current.Value.CanRun(FactsRepository))
+                        {
+                            // TODO handle false as return value
+                            // TODO handle exceptions
+                            enumerator.Current.Value.Run();
+                        }
                     }
-                } while (enumerator.MoveNext());
+                }
             }
         }
     }

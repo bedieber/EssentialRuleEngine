@@ -18,7 +18,7 @@ namespace SimpleRuleEngine
         /// </summary>
         public int Priority { get; set; } = 1;
 
-        internal bool CanRun(IFactRepository repository)
+        public bool CanRun(IFactRepository repository)
         {
             Repository = repository;
             return CanRun();
