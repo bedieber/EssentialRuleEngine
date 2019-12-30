@@ -7,7 +7,6 @@ namespace EssentialRules
     public class EssentialRulesSession
     {
         //TODO extract interface
-        //TODO how to delete facts after rule is run? Postcondition? immediately?
         private SortedList<int, IRule> Rules { get; set; }
 
         internal IFactRepository FactsRepository { get; set; }
@@ -17,6 +16,7 @@ namespace EssentialRules
         public EssentialRulesSession()
         {
             Rules = new SortedList<int, IRule>();
+            FactsRepository=new EssentialFactRepository();
         }
 
         public void AddRule(IRule rule)
@@ -35,9 +35,9 @@ namespace EssentialRules
             }
         }
 
-        public void RemoveFact()
+        public void RemoveFact(object fact)
         {
-            throw new NotImplementedException();
+            FactsRepository.RemoveFact(fact);
         }
 
         public void Fire()
