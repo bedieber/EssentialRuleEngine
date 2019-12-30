@@ -1,0 +1,69 @@
+image: microsoft/dotnet:latest
+
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+build:
+  stage: build
+  script:
+    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - 'dotnet build'
+  tags:
+    - docker-executor
+
+test:
+  stage: test
+  script:
+    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=\"$PWD/coverage/\" /p:Exclude=\"[xunit*]\" /p:ExcludeByAttribute=\"GeneratedCodeAttribute%2CObsolete%2CCompilerGeneratedAttribute%2CExcludeFromCodeCoverageAttribute\""
+    - 'dotnet $(find ~/.nuget/packages/reportgenerator -name ReportGenerator.dll | head -n1) -reports:coverage/coverage.opencover.xml -targetdir:coverage/report -verbosity:Warning -reporttypes:Html'
+  coverage: '/Total\s+\|\s+(\d{0,2}\.\d{1,2}%)/'
+  artifacts:
+    paths:
+      - 'coverage'
+  tags:
+    - docker-executor
+
+# Create versioned NuGet packages from RobotIntrospection.RobotIntrospectionLib
+# This task is only executed for the branches develop and master as well as version tags
+nuget-pack-robot-introspection-lib:
+  stage: publish
+  only:
+    - develop
+    - master
+    - /^v.*$/
+  script:
+    - 'cd SimpleRuleEngine'
+    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - 'dotnet pack -c Release -o ../nuget/'
+  artifacts:
+    paths:
+      - 'nuget'
+      - 'RobotIntrospectionLib/bin/Release/'
+  tags:
+    - docker-executor
+
+# Deploy to JR BaGet server
+# This is only done for all pushes to the master branch
+baget:
+  stage: deploy
+  only:
+    - master
+  except:
+    - web
+    - schedules
+  dependencies:
+    - nuget-pack-robot-introspection-lib
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: JR BaGet
+    url: http://robv005:33333/
+  script:
+    - 'cd nuget'
+    - 'dotnet nuget push *.nupkg -s $JR_BAGET_URL -k $JR_BAGET_API_KEY'
+  tags:
+    - docker-executor
