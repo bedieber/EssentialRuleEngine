@@ -34,6 +34,11 @@ namespace SimpleRuleEngine.Test.Rules
             RunCalled = true;
             return true;
         }
+
+        internal void CallRemove(object fact)
+        {
+            RemoveFact(fact);
+        }
         
     }
 }

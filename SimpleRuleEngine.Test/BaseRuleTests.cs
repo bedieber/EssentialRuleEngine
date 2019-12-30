@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using SimpleRuleEngine.Test.Rules;
 using Xunit;
@@ -58,6 +55,20 @@ namespace SimpleRuleEngine.Test
         }
 
         [Fact]
+        public void ExactlyOneReturnsFalseIfZeroItemsFound()
+        {
+            var rule = InitRule();
+            Assert.False(rule.ExactlyOne<double>());
+        }
+        
+        [Fact]
+        public void ExactlyOneReturnsFalseIfMoreThanOneItemsFound()
+        {
+            var rule = InitRule();
+            Assert.False(rule.ExactlyOne<int>());
+        }
+
+        [Fact]
         public void ExactlyOneWithPredicatesFindsExactItemAndAssignsItCorrectly()
         {
             var rule = InitRule();
@@ -96,39 +107,23 @@ namespace SimpleRuleEngine.Test
             Assert.Equal(2, rule.Count<int>(i=>i>1));
         }
 
-        private static BaseRule InitRule()
+        [Fact]
+        public void RemoveFactRemovesFact()
         {
-            BaseRule rule = new TestRule1();
+            var rule = InitRule();
+            string fact = null;
+            rule.ExactlyOne<string>(s => fact = s);
+            rule.CallRemove(fact);
+            Assert.Equal(0, rule.Count<string>());
+        }
+
+        private static TestRule1 InitRule()
+        {
+            TestRule1 rule = new TestRule1();
             var ruleRepository = new FakeRepository();
             ruleRepository._repository.AddRange(new object[] {1, 2, 3, "Hello"});
             rule.Repository = ruleRepository;
             return rule;
-        }
-    }
-
-    public class FakeRepository : IFactRepository
-    {
-        internal List<object> _repository = new List<object>();
-
-        public IEnumerable<T> FindAll<T>(params Predicate<T>[] func)
-        {
-            var ofType = _repository.OfType<T>();
-            foreach (var predicate in func)
-            {
-                ofType = ofType.Intersect(ofType.Where(t => predicate(t)));
-            }
-
-            return ofType.ToImmutableList();
-        }
-
-        public void Add(object fact)
-        {
-            _repository.Add(fact);
-        }
-
-        public void RemoveFact(object fact)
-        {
-            _repository.Remove(fact);
         }
     }
 }
