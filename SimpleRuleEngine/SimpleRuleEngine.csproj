@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Title>Simple Rule Engine</Title>
+    <Authors>Bernhard Dieber</Authors>
+    <Description>A simple rule engine</Description>
+    <Copyright>© 2019 Bernhard Dieber</Copyright>
   </PropertyGroup>
 
 </Project>

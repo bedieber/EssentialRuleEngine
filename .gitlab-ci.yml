@@ -29,11 +29,9 @@ test:
 
 # Create versioned NuGet packages from RobotIntrospection.RobotIntrospectionLib
 # This task is only executed for the branches develop and master as well as version tags
-nuget-pack-robot-introspection-lib:
+nuget-pack-simpleruleengine-lib:
   stage: publish
   only:
-    - develop
-    - master
     - /^v.*$/
   script:
     - 'cd SimpleRuleEngine'
@@ -51,12 +49,12 @@ nuget-pack-robot-introspection-lib:
 baget:
   stage: deploy
   only:
-    - master
+    - /^v.*$/
   except:
     - web
     - schedules
   dependencies:
-    - nuget-pack-robot-introspection-lib
+    - nuget-pack-simpleruleengine-lib
   variables:
     GIT_STRATEGY: none
   environment:
