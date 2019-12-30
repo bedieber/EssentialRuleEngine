@@ -33,7 +33,7 @@ nuget-pack-simpleruleengine-lib:
   only:
     - /^v.*$/
   script:
-    - 'cd SimpleRuleEngine'
+    - 'cd EssentialRules'
     - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
     - 'dotnet pack -c Release -o ../nuget/'
   artifacts:
