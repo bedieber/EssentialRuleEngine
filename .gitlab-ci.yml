@@ -42,7 +42,7 @@ nuget-pack-robot-introspection-lib:
   artifacts:
     paths:
       - 'nuget'
-      - 'RobotIntrospectionLib/bin/Release/'
+      - 'SimpleRuleEngine/bin/Release/'
   tags:
     - docker-executor
 
