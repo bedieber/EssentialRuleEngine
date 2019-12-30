@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace SimpleRuleEngine.Test
+namespace EssentialRules.Test
 {
     public class FakeRepository : IFactRepository
     {
-        internal List<object> _repository = new List<object>();
+        internal List<object> Repository = new List<object>();
 
         public IEnumerable<T> FindAll<T>(params Predicate<T>[] func)
         {
-            var ofType = _repository.OfType<T>();
+            var ofType = Repository.OfType<T>();
             foreach (var predicate in func)
             {
                 ofType = ofType.Intersect(ofType.Where(t => predicate(t)));
@@ -22,12 +22,12 @@ namespace SimpleRuleEngine.Test
 
         public void Add(object fact)
         {
-            _repository.Add(fact);
+            Repository.Add(fact);
         }
 
         public void RemoveFact(object fact)
         {
-            _repository.Remove(fact);
+            Repository.Remove(fact);
         }
     }
 }

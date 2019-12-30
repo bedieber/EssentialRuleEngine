@@ -15,7 +15,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SimpleRuleEngine\SimpleRuleEngine.csproj" />
+      <ProjectReference Include="..\EssentialRules\EssentialRules.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="$PWD\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="$PWD\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="$PWD\**" />
     </ItemGroup>
 
 </Project>

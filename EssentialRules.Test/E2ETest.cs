@@ -1,16 +1,15 @@
-using System;
-using SimpleRuleEngine.Test.DTO;
-using SimpleRuleEngine.Test.Rules;
+using EssentialRules.Test.DTO;
+using EssentialRules.Test.Rules;
 using Xunit;
 
-namespace SimpleRuleEngine.Test
+namespace EssentialRules.Test
 {
     public class E2ETest
     {
         [Fact]
         public void Test1()
         {
-            SimpleRuleEngineSession session=new SimpleRuleEngineSession();
+            EssentialRulesSession session=new EssentialRulesSession();
             session.FactsRepository=new FakeRepository();
             session.AddFact(new TestDTO1{Property1 = true, Property2 = true});
             session.AddFact(new TestDTO2{Property1 = false, Property2 = 11});

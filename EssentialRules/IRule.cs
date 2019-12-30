@@ -1,6 +1,6 @@
-namespace SimpleRuleEngine
+namespace EssentialRules
 {
-    public interface ISimpleRule
+    public interface IRule
     {
         int Priority { get; }
         bool CanRun(IFactRepository repository);

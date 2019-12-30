@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SimpleRuleEngine
+namespace EssentialRules
 {
     public interface IFactRepository
     {

@@ -27,8 +27,7 @@ test:
   tags:
     - docker-executor
 
-# Create versioned NuGet packages from RobotIntrospection.RobotIntrospectionLib
-# This task is only executed for the branches develop and master as well as version tags
+# This task is only executed for version tags
 nuget-pack-simpleruleengine-lib:
   stage: publish
   only:
@@ -40,12 +39,12 @@ nuget-pack-simpleruleengine-lib:
   artifacts:
     paths:
       - 'nuget'
-      - 'SimpleRuleEngine/bin/Release/'
+      - 'EssentialRules/bin/Release/'
   tags:
     - docker-executor
 
 # Deploy to JR BaGet server
-# This is only done for all pushes to the master branch
+# This is only done for version tags
 baget:
   stage: deploy
   only:

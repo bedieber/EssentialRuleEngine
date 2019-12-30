@@ -1,9 +1,8 @@
 using System.Linq;
-using SimpleRuleEngine.Test.Rules;
+using EssentialRules.Test.Rules;
 using Xunit;
-using Xunit.Sdk;
 
-namespace SimpleRuleEngine.Test
+namespace EssentialRules.Test
 {
     public class BaseRuleTests
     {
@@ -121,7 +120,7 @@ namespace SimpleRuleEngine.Test
         {
             TestRule1 rule = new TestRule1();
             var ruleRepository = new FakeRepository();
-            ruleRepository._repository.AddRange(new object[] {1, 2, 3, "Hello"});
+            ruleRepository.Repository.AddRange(new object[] {1, 2, 3, "Hello"});
             rule.Repository = ruleRepository;
             return rule;
         }

@@ -2,24 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace SimpleRuleEngine
+namespace EssentialRules
 {
-    public class SimpleRuleEngineSession
+    public class EssentialRulesSession
     {
         //TODO extract interface
         //TODO how to delete facts after rule is run? Postcondition? immediately?
-        private SortedList<int, ISimpleRule> Rules { get; set; }
+        private SortedList<int, IRule> Rules { get; set; }
 
         internal IFactRepository FactsRepository { get; set; }
 
         private Mutex _mutex = new Mutex();
 
-        public SimpleRuleEngineSession()
+        public EssentialRulesSession()
         {
-            Rules = new SortedList<int, ISimpleRule>();
+            Rules = new SortedList<int, IRule>();
         }
 
-        public void AddRule(ISimpleRule rule)
+        public void AddRule(IRule rule)
         {
             lock (_mutex)
             {

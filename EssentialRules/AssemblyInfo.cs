@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("SimpleRuleEngine.Test")]
-namespace SimpleRuleEngine
+[assembly:InternalsVisibleTo("EssentialRules.Test")]
+namespace EssentialRules
 {
     public class AssemblyInfo
     {

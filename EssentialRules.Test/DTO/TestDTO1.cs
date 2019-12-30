@@ -1,4 +1,4 @@
-namespace SimpleRuleEngine.Test.DTO
+namespace EssentialRules.Test.DTO
 {
     public class TestDTO1
     {

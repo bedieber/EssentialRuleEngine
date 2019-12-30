@@ -7,6 +7,9 @@
     <Authors>Bernhard Dieber</Authors>
     <Description>A simple rule engine</Description>
     <Copyright>© 2019 Bernhard Dieber</Copyright>
+    <AssemblyName>EssentialRule</AssemblyName>
+    <RootNamespace>EssentialRules</RootNamespace>
+    <PackageId>EssentialRules</PackageId>
   </PropertyGroup>
 
 </Project>

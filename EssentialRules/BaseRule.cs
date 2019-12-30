@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SimpleRuleEngine
+namespace EssentialRules
 {
     /// <summary>
     /// Baser implementation of ISimpleRule. Provides basis methods for facts base querying
     /// </summary>
-    public abstract class BaseRule : ISimpleRule
+    public abstract class BaseRule : IRule
     {
         internal IFactRepository Repository { get; set; }
 
@@ -37,7 +37,7 @@ namespace SimpleRuleEngine
 
         /// <summary>
         /// This method determines if all conditions of a rule are satisfied for the rule to be executed.<br />
-        /// If the method returns true, <see cref="Run"/> will be called.
+        /// If the method returns true, <see cref="IRule.Run"/> will be called.
         /// </summary>
         /// <returns><c>true</c> if all conditions of the rule are satisfied</returns>
         public abstract bool CanRun();
