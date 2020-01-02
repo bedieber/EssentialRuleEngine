@@ -116,6 +116,14 @@ namespace EssentialRules.Test
             Assert.Equal(0, rule.Count<string>());
         }
 
+        [Fact]
+        public void CanAddFactFromDerivedClass()
+        {
+            var rule = InitRule();
+            rule.PerformAdd("bla");
+            Assert.NotEmpty(rule.FindAll<string>(s=>s.Contains("bla")));
+        }
+
         private static TestRule1 InitRule()
         {
             TestRule1 rule = new TestRule1();
