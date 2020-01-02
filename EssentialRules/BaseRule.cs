@@ -99,5 +99,10 @@ namespace EssentialRules
         {
             return FindAll<T>(predicates).Count();
         }
+
+        protected void AddFact(object fact)
+        {
+            Repository.Add(fact);
+        }
     }
 }

@@ -36,6 +36,10 @@ namespace EssentialRules.Test.Rules
         {
             RemoveFact(fact);
         }
-        
+
+        public void PerformAdd(string bla)
+        {
+            AddFact(bla);
+        }
     }
 }
