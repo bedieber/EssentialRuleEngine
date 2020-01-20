@@ -5,6 +5,8 @@ namespace EssentialRules.Test
 {
     public class EssentialFactRepositoryTests
     {
+        
+        
         [Fact]
         public void CanAddFact()
         {
@@ -65,4 +67,5 @@ namespace EssentialRules.Test
             return repository;
         }
     }
+
 }
