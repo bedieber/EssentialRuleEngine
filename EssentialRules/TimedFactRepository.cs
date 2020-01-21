@@ -45,7 +45,7 @@ namespace EssentialRules
         /// <param name="func"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IEnumerable<KeyValuePair<DateTime, T>> FindAllTimed<T>(params Predicate<T>[] func) where T: class
+        public IEnumerable<KeyValuePair<DateTime, T>> FindAllTimed<T>(params Predicate<T>[] func)
         {
             lock(this)
             {
