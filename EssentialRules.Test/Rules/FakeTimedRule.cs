@@ -1,4 +1,8 @@
-namespace EssentialRules.Test
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace EssentialRules.Test.Rules
 {
     public class FakeTimedRule : TimedBaseRule
     {
@@ -8,7 +12,7 @@ namespace EssentialRules.Test
 
         public override bool CanRun()
         {
-            return true;
+            return false;
         }
 
         public override bool Run()
