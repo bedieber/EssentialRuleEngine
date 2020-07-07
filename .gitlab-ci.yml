@@ -1,4 +1,4 @@
-image: microsoft/dotnet:latest
+image: mcr.microsoft.com/dotnet/core/sdk:2.1
 
 stages:
   - build
@@ -58,9 +58,9 @@ baget:
     - nuget-pack-simpleruleengine-lib
   variables:
     GIT_STRATEGY: none
-  environment:
-    name: JR BaGet
-    url: http://robv005:33333/
+#  environment:
+#    name: JR BaGet
+#    url: http://robotics-baget./
   script:
     - 'cd nuget'
     - 'dotnet nuget push *.nupkg -s $JR_BAGET_URL -k $JR_BAGET_API_KEY'
