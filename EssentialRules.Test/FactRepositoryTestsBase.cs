@@ -7,46 +7,54 @@ namespace EssentialRules.Test
     {
         protected Type FactRepositoryType { get; set; }
 
-        [Fact]
-        public void CanFindByType()
+        [Theory]
+        [InlineData(typeof(TimedFactRepository))]
+        [InlineData(typeof(EssentialFactRepository))]
+        public void CanFindByType(Type repositoryType)
         {
-            var repository = InitRepository();
+            var repository = InitRepository(repositoryType);
             Assert.NotEmpty(repository.FindAll<string>());
         }
 
-        [Fact]
-        public void CanFindByPredicate()
+        [Theory]
+        [InlineData(typeof(TimedFactRepository))]
+        [InlineData(typeof(EssentialFactRepository))]
+        public void CanFindByPredicate(Type repositoryType)
         {
-            var repository= InitRepository();
+            var repository= InitRepository(repositoryType);
             var result = repository.FindAll<string>((s) => s.Contains("e"));
             Assert.NotEmpty(result);
         }
-
-        [Fact]
-        public void CanFindReturnsEmptyOnTypeMismatch()
+        
+        [Theory]
+        [InlineData(typeof(TimedFactRepository))]
+        [InlineData(typeof(EssentialFactRepository))]
+        public void CanFindReturnsEmptyOnTypeMismatch(Type repositoryType)
         {
-            var repository = InitRepository();
+            var repository = InitRepository(repositoryType);
             var result = repository.FindAll<long>();
             Assert.Empty(result);
         }
-
-        [Fact]
-        public void CanFindReturnsEmptyOnPredicateMismatch()
+        
+        [Theory]
+        [InlineData(typeof(TimedFactRepository))]
+        [InlineData(typeof(EssentialFactRepository))]
+        public void CanFindReturnsEmptyOnPredicateMismatch(Type repositoryType)
         {
-            var repository = InitRepository();
+            var repository = InitRepository(repositoryType);
             var result = repository.FindAll<int>(i => i > 5);
             Assert.Empty(result);
         }
 
-        protected IFactRepository InitRepositoryEmpty()
+        protected IFactRepository InitRepositoryEmpty(Type repositoryType)
         {
-            var repository = (IFactRepository)FactRepositoryType.Assembly.CreateInstance(FactRepositoryType.FullName);
+            var repository = (IFactRepository)repositoryType.Assembly.CreateInstance(repositoryType.FullName ?? throw new NullReferenceException());
             return repository;
         }
 
-        private IFactRepository InitRepository()
+        private IFactRepository InitRepository(Type repositoryType)
         {
-            var repository = InitRepositoryEmpty();
+            var repository = InitRepositoryEmpty(repositoryType);
             repository.Add(new String("test"));
             repository.Add(5);
             repository.Add(23.5);

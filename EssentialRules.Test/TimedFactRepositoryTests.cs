@@ -15,7 +15,7 @@ namespace EssentialRules.Test
         [Fact]
         public void CanRetrieveTimedFactsSortedByTimestamp()
         {
-            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty();
+            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty(FactRepositoryType);
             repository.Add(1);
             repository.Add(2);
             repository.Add(3);
@@ -27,7 +27,7 @@ namespace EssentialRules.Test
         [Fact]
         public void CanRetrieveTimedFactsInHeterogeneousFactsbaseSortedByTimestamp()
         {
-            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty();
+            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty(FactRepositoryType);
             repository.Add(1);
             repository.Add("First");
             repository.Add(2);
@@ -41,7 +41,7 @@ namespace EssentialRules.Test
         [Fact]
         public void CanRetrieveTimedFactsWithPredicatesSortedByTimestamp()
         {
-            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty();
+            TimedFactRepository repository = (TimedFactRepository)InitRepositoryEmpty(FactRepositoryType);
             repository.Add(1);
             string s1 = "stringFirst";
             string s2 = "stringSecond";
