@@ -3,25 +3,9 @@ using Xunit;
 
 namespace EssentialRules.Test
 {
-    public class EssentialFactRepositoryTests
+    public class FactRepositoryTestsBase
     {
-        [Fact]
-        public void CanAddFact()
-        {
-            EssentialFactRepository repository=new EssentialFactRepository();
-            repository.Add(new String("test"));
-            Assert.Single(repository.Repository);
-        }
-
-        [Fact]
-        public void CanRemoveFact()
-        {
-            EssentialFactRepository repository=new EssentialFactRepository();
-            var fact = new String("test");
-            repository.Add(fact);
-            repository.RemoveFact(fact);
-            Assert.Empty(repository.Repository);
-        }
+        protected Type FactRepositoryType { get; set; }
 
         [Fact]
         public void CanFindByType()
@@ -29,7 +13,6 @@ namespace EssentialRules.Test
             var repository = InitRepository();
             Assert.NotEmpty(repository.FindAll<string>());
         }
-
 
         [Fact]
         public void CanFindByPredicate()
@@ -54,11 +37,16 @@ namespace EssentialRules.Test
             var result = repository.FindAll<int>(i => i > 5);
             Assert.Empty(result);
         }
-        
-        
-        private static EssentialFactRepository InitRepository()
+
+        protected IFactRepository InitRepositoryEmpty()
         {
-            EssentialFactRepository repository = new EssentialFactRepository();
+            var repository = (IFactRepository)FactRepositoryType.Assembly.CreateInstance(FactRepositoryType.FullName);
+            return repository;
+        }
+
+        private IFactRepository InitRepository()
+        {
+            var repository = InitRepositoryEmpty();
             repository.Add(new String("test"));
             repository.Add(5);
             repository.Add(23.5);
