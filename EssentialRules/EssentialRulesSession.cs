@@ -16,7 +16,7 @@ namespace EssentialRules
         public EssentialRulesSession()
         {
             Rules = new List<IRule>();
-            FactsRepository=new EssentialFactRepository();
+            FactsRepository=new TimedFactRepository();
         }
 
         public void AddRule(IRule rule)
