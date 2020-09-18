@@ -55,6 +55,14 @@ namespace EssentialRules.Test
             Assert.Equal(2, intAfterCount);
         }
 
+        [Fact]
+        public void CanFindYoungest()
+        {
+            var rule = CreateRule();
+            var youngest= rule.Youngest<string>();
+            Assert.Equal("five", youngest);
+        }
+
 
         private FakeTimedRule CreateRule()
         {

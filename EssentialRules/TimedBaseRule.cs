@@ -40,5 +40,14 @@ namespace EssentialRules
         {
             return FindAfter<T>(timestamp).Count();
         }
+
+        public T Youngest<T>()
+        {
+            var pairs = FindAllTimed<T>((t) => true);
+
+            var keyValuePairs = pairs as KeyValuePair<DateTime, T>[] ?? pairs.ToArray();
+            var max = keyValuePairs.Max(t2 => t2.Key);
+            return keyValuePairs.Where(t => t.Key == max).Select(t=>t.Value).First();
+        }
     }
 }
