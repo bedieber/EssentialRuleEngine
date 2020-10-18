@@ -7,7 +7,7 @@ namespace EssentialRules
     public class EssentialRulesSession
     {
         //TODO extract interface
-        private SortedList<int, IRule> Rules { get; set; }
+        private List<IRule> Rules { get; set; }
 
         internal IFactRepository FactsRepository { get; set; }
 
@@ -15,15 +15,15 @@ namespace EssentialRules
 
         public EssentialRulesSession()
         {
-            Rules = new SortedList<int, IRule>();
-            FactsRepository=new EssentialFactRepository();
+            Rules = new List<IRule>();
+            FactsRepository=new TimedFactRepository();
         }
 
         public void AddRule(IRule rule)
         {
             lock (_mutex)
             {
-                Rules.Add(rule.Priority, rule);
+                Rules.Add(rule);
             }
         }
 
@@ -48,11 +48,11 @@ namespace EssentialRules
                 {
                     while (enumerator.MoveNext())
                     {
-                        if (enumerator.Current.Value.CanRun(FactsRepository))
+                        if (enumerator.Current.CanRun(FactsRepository))
                         {
                             // TODO handle false as return value
                             // TODO handle exceptions
-                            enumerator.Current.Value.Run(FactsRepository);
+                            enumerator.Current.Run(FactsRepository);
                         }
                     }
                 }

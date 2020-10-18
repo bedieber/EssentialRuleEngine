@@ -1,4 +1,4 @@
-image: microsoft/dotnet:latest
+image: mcr.microsoft.com/dotnet/core/sdk:2.1
 
 stages:
   - build
@@ -9,7 +9,7 @@ stages:
 build:
   stage: build
   script:
-    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - 'dotnet restore -s $JR_BAGET_URL -s https://api.nuget.org/v3/index.json'
     - 'dotnet build'
   tags:
     - docker-executor
@@ -17,7 +17,7 @@ build:
 test:
   stage: test
   script:
-    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - 'dotnet restore -s $JR_BAGET_URL -s https://api.nuget.org/v3/index.json'
     - "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=\"$PWD/coverage/\" /p:Exclude=\"[xunit*]\" /p:ExcludeByAttribute=\"GeneratedCodeAttribute%2CObsolete%2CCompilerGeneratedAttribute%2CExcludeFromCodeCoverageAttribute\""
     - 'dotnet $(find ~/.nuget/packages/reportgenerator -name ReportGenerator.dll | head -n1) -reports:coverage/coverage.opencover.xml -targetdir:coverage/report -verbosity:Warning -reporttypes:Html'
   coverage: '/Total\s+\|\s+(\d{0,2}\.\d{1,2}%)/'
@@ -34,7 +34,7 @@ nuget-pack-simpleruleengine-lib:
     - /^v.*$/
   script:
     - 'cd EssentialRules'
-    - 'dotnet restore -s http://robv005:33333/v3/index.json -s https://api.nuget.org/v3/index.json'
+    - 'dotnet restore -s $JR_BAGET_URL -s https://api.nuget.org/v3/index.json'
     - 'export TAGGED_VERSION=$(echo $CI_COMMIT_REF_NAME | grep -o "\([0-9]*\.\)*[0-9]*")'
     - 'echo $TAGGED_VERSION'
     - dotnet pack -c Release -p:Version=$TAGGED_VERSION -o ../nuget/
@@ -58,9 +58,9 @@ baget:
     - nuget-pack-simpleruleengine-lib
   variables:
     GIT_STRATEGY: none
-  environment:
-    name: JR BaGet
-    url: http://robv005:33333/
+#  environment:
+#    name: JR BaGet
+#    url: http://robotics-baget./
   script:
     - 'cd nuget'
     - 'dotnet nuget push *.nupkg -s $JR_BAGET_URL -k $JR_BAGET_API_KEY'
